@@ -1,0 +1,79 @@
+/* Project-level responsive overrides (Bootstrap CSS-only setup). */
+
+/* Prevent accidental horizontal scroll from long content */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Navbar: make the search + action buttons wrap nicely on small screens */
+@media (max-width: 575.98px) {
+  .navbar .navbar-brand h2 {
+    font-size: 1.25rem;
+  }
+
+  .navbar .navbar-collapse form.d-flex {
+    width: 100%;
+    margin-top: 0.75rem;
+  }
+
+  .navbar .navbar-collapse form.d-flex input[type='search'] {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .navbar .navbar-collapse .navbar-actions {
+    width: 100%;
+    margin-top: 0.75rem;
+    margin-left: 0 !important;
+    flex-wrap: wrap;
+    gap: 0.5rem !important;
+  }
+
+  .navbar .navbar-collapse .navbar-actions > a,
+  .navbar .navbar-collapse .navbar-actions > button {
+    flex: 1 1 auto;
+  }
+}
+
+/* Admin layout: turn sidebar into a top bar on small screens */
+@media (max-width: 767.98px) {
+  .admin-layout {
+    flex-direction: column !important;
+  }
+
+  .admin-sidebar {
+    width: 100% !important;
+    padding: 14px 12px !important;
+  }
+
+  .admin-brand {
+    font-size: 18px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .admin-nav {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    gap: 8px !important;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-menu-btn {
+    white-space: nowrap;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
