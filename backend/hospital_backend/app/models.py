@@ -30,6 +30,8 @@ class CustomUser(AbstractUser):
 class Registration(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     patient_id = models.CharField(max_length=30, unique=True, null=True, blank=True)
+    phone = models.CharField(max_length=15, null=True, blank=True)
+    age = models.IntegerField(null=True, blank=True)
 
     GENDER_MALE = "Male"
     GENDER_FEMALE = "Female"
@@ -39,7 +41,8 @@ class Registration(models.Model):
     ]
 
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True, blank=True)
-    phone_number = models.CharField(max_length=20)
+    phone = models.CharField(max_length=20, null=True, blank=True)
+    age = models.IntegerField(null=True, blank=True)
     address = models.TextField()
     image = models.ImageField(upload_to="patients/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
