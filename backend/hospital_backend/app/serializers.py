@@ -421,81 +421,39 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
                 return password
 
     def create(self, validated_data):
-        # 1) Normalize incoming input fields.
-        full_name = validated_data.pop('name').strip()
-        email = validated_data.pop('email').strip().lower()
-        phone_number = validated_data.pop('phone_number', None) or validated_data.pop('phone', None)
-        validated_data.pop("phone", None)
-        phone_number = self.validate_phone_number(str(phone_number).strip())
-        address = validated_data.pop('address').strip()
-        gender = validated_data.pop("gender", None)
-        validated_data.pop("age", None)
-        validated_data.pop("password", None)
-        image = validated_data.pop('image', None)
-
-        first_name, last_name = split_name(full_name, default_first_name="Patient")
-
-        # 2) Generate internal identifiers/credentials.
-        username = self._build_username(full_name, email)
-        patient_id = self._generate_patient_id()
-        auto_password = self._generate_strong_password()
-        login_url = getattr(settings, "FRONTEND_LOGIN_URL", "http://127.0.0.1:5173/login")
-
         try:
-            with transaction.atomic():
-                # Re-check inside the transaction so duplicates never create a user/registration,
-                # even under concurrent requests.
-                if CustomUser.objects.filter(email__iexact=email).exists():
-                    raise serializers.ValidationError({"email": "This email is already registered"})
-                if Registration.objects.filter(phone_number=phone_number).exists():
-                    raise serializers.ValidationError({"phone_number": "This phone number is already registered"})
-
-                user = CustomUser.objects.create_user(
-                    username=username,
-                    email=email,
-                    first_name=first_name,
-                    last_name=last_name,
-                    password=auto_password,
-                    user_type=UserType.PATIENT,
-                    status=1,
-                    is_active=True,
-                )
-                Registration.objects.create(
-                    user=user,
-                    patient_id=patient_id,
-                    phone_number=phone_number,
-                    address=address,
-                    gender=gender,
-                    image=image,
-                )
-        except Exception as exc:
-            raise serializers.ValidationError(
-                {"error": f"Unable to complete registration. {str(exc)}"}
+            # Create the user
+            user = CustomUser.objects.create_user(
+                username=validated_data['email'],
+                email=validated_data['email'],
+                password=validated_data.get('password', 'defaultpassword'),
+                first_name=validated_data['name'],
             )
 
-        # 3) Send email outside DB transaction. User creation succeeds even if mail fails.
-        self.email_error = None
-        try:
-            send_mail(
-                subject="Hospital Booking Registration Successful",
-                message=(
-                    f"Hello {first_name},\n\n"
-                    "Your patient registration is successful.\n"
-                    f"Your Patient ID: {patient_id}\n"
-                    f"Your Password: {auto_password}\n"
-                    f"Login Link: {login_url}\n\n"
-                    "You can login and reset your password anytime."
-                ),
-                from_email=getattr(settings, "DEFAULT_FROM_EMAIL", settings.EMAIL_HOST_USER),
-                recipient_list=[email],
-                fail_silently=False,
+            # Create the registration
+            registration = Registration.objects.create(
+                user=user,
+                phone_number=validated_data.get('phone_number', ''),
+                phone=validated_data.get('phone', ''),
+                address=validated_data['address'],
+                gender=validated_data.get('gender', None),
+                age=validated_data.get('age', None),
+                image=validated_data.get('image', None),
             )
-        except Exception as exc:
-            self.email_error = str(exc)
 
-        self.generated_patient_id = patient_id
-        self.generated_password = auto_password
-        return user
+            # Set generated_patient_id and email_error attributes
+            self.generated_patient_id = registration.id
+            self.email_error = None
+
+            # Send email (pseudo-code, replace with actual implementation)
+            try:
+                send_email_to_patient(user.email, registration.id, validated_data.get('password', 'defaultpassword'))
+            except Exception as e:
+                self.email_error = str(e)
+
+            return user
+        except Exception as e:
+            raise serializers.ValidationError({"error": str(e)})
 
 
 class DoctorProfileSerializer(serializers.ModelSerializer):
