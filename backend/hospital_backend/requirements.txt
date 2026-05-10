@@ -4,3 +4,4 @@ django-cors-headers
 gunicorn
 mysqlclient
 python-dotenv
+Pillow
