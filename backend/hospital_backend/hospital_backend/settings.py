@@ -72,11 +72,32 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
 ] 
+# CORS - must include the frontend origins that will call your API
+# Note: request shown in error is from http://localhost:5173
 CORS_ALLOWED_ORIGINS = [
     "https://playful-alpaca-28d7eb.netlify.app",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
     "http://localhost:5174",
     "http://127.0.0.1:5174",
 ]
+
+# Allow the frontend to send cookies/Authorization headers if needed
+CORS_ALLOW_CREDENTIALS = True
+
+# Make sure common headers are allowed for DRF/axios requests
+CORS_ALLOW_HEADERS = list(
+    {
+        "authorization",
+        "content-type",
+        "accept",
+        "origin",
+        "x-requested-with",
+    }
+)
+
+# Preflight OPTIONS requests should succeed
+CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://playful-alpaca-28d7eb.netlify.app",
