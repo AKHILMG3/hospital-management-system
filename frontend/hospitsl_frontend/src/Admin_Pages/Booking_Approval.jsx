@@ -11,7 +11,7 @@ const Booking_Approval = () => {
     try {
       setLoading(true)
       setError("")
-      const res = await axios.get("http://127.0.0.1:8000/admin-bookings/?status=Pending", {
+      const res = await axios.get("https://hospital-management-system-qdsz.onrender.com/admin-bookings/?status=Pending", {
         timeout: 10000,
       })
       setBookings(res.data || [])
@@ -37,7 +37,7 @@ const Booking_Approval = () => {
 
   const handleAction = async (bookingId, action) => {
     try {
-      await axios.patch(`http://127.0.0.1:8000/admin-bookings/${bookingId}/status/`, { action })
+      await axios.patch(`https://hospital-management-system-qdsz.onrender.com/admin-bookings/${bookingId}/status/`, { action })
       setBookings((prev) => prev.filter((booking) => booking.id !== bookingId))
     } catch {
       alert("Failed to update booking status")
@@ -186,4 +186,5 @@ const styles = {
 }
 
 export default Booking_Approval
+
 

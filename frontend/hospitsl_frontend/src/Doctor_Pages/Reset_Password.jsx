@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { logoutUser } from "../utils/auth"
 
-const API_URL = "http://127.0.0.1:8000"
+const API_URL = 'https://hospital-management-system-qdsz.onrender.com'
 
 const Reset_Password = () => {
   const navigate = useNavigate()

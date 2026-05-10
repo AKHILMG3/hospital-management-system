@@ -26,7 +26,7 @@ const Profile_View = () => {
     const fetchProfile = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("http://127.0.0.1:8000/patient-profile/", {
+        const res = await axios.get("https://hospital-management-system-qdsz.onrender.com/patient-profile/", {
           headers: { Authorization: `Token ${token}` },
         });
         const data = res.data || {};
@@ -58,7 +58,7 @@ const Profile_View = () => {
     setSuccess("");
 
     try {
-      await axios.patch("http://127.0.0.1:8000/patient-profile/", formData, {
+      await axios.patch("https://hospital-management-system-qdsz.onrender.com/patient-profile/", formData, {
         headers: { Authorization: `Token ${token}` },
       });
       setSuccess("Profile updated successfully.");
@@ -203,3 +203,4 @@ const styles = {
 }
 
 export default Profile_View;
+

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-const API_URL = "http://127.0.0.1:8000"
+const API_URL = 'https://hospital-management-system-qdsz.onrender.com'
 const DOCTOR_USER_TYPE = 3
 const NOTIFICATION_REFRESH_MS = 15000
 const UPCOMING_DAYS = 7

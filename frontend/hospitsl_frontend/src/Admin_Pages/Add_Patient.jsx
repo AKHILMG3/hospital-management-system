@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import axios from "axios"
 import { getAuthToken } from "../utils/auth"
 
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000").replace(/\/$/, "")
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'https://hospital-management-system-qdsz.onrender.com').replace(/\/$/, "")
 const INITIAL_FORM = {
   name: "",
   email: "",

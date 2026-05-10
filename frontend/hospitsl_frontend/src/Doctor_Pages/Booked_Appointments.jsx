@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 // Constants for API and user types
-const API_URL = "http://127.0.0.1:8000" // Backend server address
+const API_URL = 'https://hospital-management-system-qdsz.onrender.com' // Backend server address
 const DOCTOR_USER_TYPE = 3 // User type for doctors
 const STATUS_FILTERS = ["All", "Pending", "Approved", "Rejected", "Completed"] // Status filter options
 const CLOSED_BOOKING_STATUSES = ["rejected", "cancelled"] // Closed statuses

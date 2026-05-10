@@ -1,8 +1,8 @@
-﻿import React, { useState } from "react"
+import React, { useState } from "react"
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
 
-const LOGIN_URL = "http://127.0.0.1:8000/patient-login/"
+const LOGIN_URL = "https://hospital-management-system-qdsz.onrender.com/patient-login/"
 const STORAGE_KEYS = {
   authUser: "auth_user",
   patientUser: "patient_user",
@@ -228,3 +228,4 @@ const styles = {
 }
 
 export default Login
+

@@ -21,7 +21,7 @@ const My_Appointments = () => {
       try {
         setLoading(true)
         setError("")
-        const res = await axios.get("http://127.0.0.1:8000/patient-appointments/", {
+        const res = await axios.get("https://hospital-management-system-qdsz.onrender.com/patient-appointments/", {
           headers: {
             Authorization: `Token ${token}`,
           },

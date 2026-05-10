@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
-const PROFILE_URL = "http://127.0.0.1:8000/doctor-profile/"
+const PROFILE_URL = "https://hospital-management-system-qdsz.onrender.com/doctor-profile/"
 const GMAIL_REGEX = /^[A-Z0-9._%+-]+@gmail\.com$/i
 
 function readAuthUser() {

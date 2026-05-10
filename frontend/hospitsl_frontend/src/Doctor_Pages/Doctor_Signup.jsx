@@ -20,7 +20,7 @@ const Doctor_Signup = () => {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const res = await axios.get("http://127.0.0.1:8000/departments/")
+        const res = await axios.get("https://hospital-management-system-qdsz.onrender.com/departments/")
         const activeDepartments = (res.data || []).filter((dep) => dep.is_active)
         setDepartments(activeDepartments)
       } catch {
@@ -84,7 +84,7 @@ const Doctor_Signup = () => {
       if (imageFile) {
         payload.append("image", imageFile)
       }
-      const res = await axios.post("http://127.0.0.1:8000/doctor-signup/", payload, {
+      const res = await axios.post("https://hospital-management-system-qdsz.onrender.com/doctor-signup/", payload, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -301,3 +301,4 @@ fileInput: {
 
 
 export default Doctor_Signup
+

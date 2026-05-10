@@ -47,8 +47,8 @@ const Appointent_Page = () => {
       try {
         setLoading(true)
         const [profileRes, departmentsRes] = await Promise.all([
-          axios.get("http://127.0.0.1:8000/patient-booking-profile/", authHeaders),
-          axios.get("http://127.0.0.1:8000/departments/"),
+          axios.get("https://hospital-management-system-qdsz.onrender.com/patient-booking-profile/", authHeaders),
+          axios.get("https://hospital-management-system-qdsz.onrender.com/departments/"),
         ])
         setProfile(profileRes.data)
         setDepartments(departmentsRes.data || [])
@@ -75,7 +75,7 @@ const Appointent_Page = () => {
       try {
         setError("")
         const res = await axios.get(
-          `http://127.0.0.1:8000/department-doctors/?department_id=${departmentId}`,
+          `https://hospital-management-system-qdsz.onrender.com/department-doctors/?department_id=${departmentId}`,
           authHeaders
         )
         setDoctors(res.data || [])
@@ -104,7 +104,7 @@ const Appointent_Page = () => {
           return
         }
         const res = await axios.get(
-          `http://127.0.0.1:8000/doctor-availability/?doctor_id=${selectedDoctorId}&date=${selectedAppointmentDate}&appointment_date=${encodeURIComponent(slotDateTime.toISOString())}`,
+          `https://hospital-management-system-qdsz.onrender.com/doctor-availability/?doctor_id=${selectedDoctorId}&date=${selectedAppointmentDate}&appointment_date=${encodeURIComponent(slotDateTime.toISOString())}`,
           authHeaders
         )
         setAvailability(res.data)
@@ -153,7 +153,7 @@ const Appointent_Page = () => {
       }
 
       await axios.post(
-        "http://127.0.0.1:8000/appointments/",
+        "https://hospital-management-system-qdsz.onrender.com/appointments/",
         {
           department_id: Number(formData.department_id),
           doctor_id: Number(formData.doctor_id),
@@ -348,4 +348,5 @@ const styles = {
 }
 
 export default Appointent_Page
+
 

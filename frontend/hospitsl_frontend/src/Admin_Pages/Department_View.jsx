@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import axios from "axios"
 import "./Department_View.css"
 
-const API_BASE_URL = "http://127.0.0.1:8000"
+const API_BASE_URL = 'https://hospital-management-system-qdsz.onrender.com'
 
 const Department_View = () => {
   const [departments, setDepartments] = useState([])

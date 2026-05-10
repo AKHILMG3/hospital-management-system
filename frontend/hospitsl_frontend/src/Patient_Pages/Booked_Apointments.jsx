@@ -33,7 +33,7 @@ const Booked_Apointments = () => {
         setLoading(true)
         setError("")
         setSuccess("")
-        const res = await axios.get("http://127.0.0.1:8000/patient-appointments/?status=Approved", {
+        const res = await axios.get("https://hospital-management-system-qdsz.onrender.com/patient-appointments/?status=Approved", {
           headers: { Authorization: `Token ${token}` },
         })
         setAppointments(res.data || [])
@@ -81,7 +81,7 @@ const Booked_Apointments = () => {
       setSuccess("")
 
       const res = await axios.patch(
-        `http://127.0.0.1:8000/patient-appointments/${appointmentId}/cancel/`,
+        `https://hospital-management-system-qdsz.onrender.com/patient-appointments/${appointmentId}/cancel/`,
         {},
         { headers: { Authorization: `Token ${token}` } }
       )
@@ -260,3 +260,4 @@ const styles = {
     fontWeight: 600,
   },
 }
+
