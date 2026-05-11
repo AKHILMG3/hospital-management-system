@@ -445,9 +445,24 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             self.generated_patient_id = registration.id
             self.email_error = None
 
-            # Send email (pseudo-code, replace with actual implementation)
+            # Send email with credentials to patient
             try:
-                send_email_to_patient(user.email, registration.id, validated_data.get('password', 'defaultpassword'))
+                login_url = getattr(settings, "FRONTEND_LOGIN_URL", "http://127.0.0.1:5173/login")
+                send_mail(
+                    subject="Patient Account Created",
+                    message=(
+                        f"Hello {validated_data['name']},\n\n"
+                        "Your patient account has been created successfully.\n"
+                        f"Patient ID: {registration.id}\n"
+                        f"Email: {user.email}\n"
+                        f"Password: {validated_data.get('password', 'defaultpassword')}\n"
+                        f"Login Link: {login_url}\n\n"
+                        "You can login and change your password anytime."
+                    ),
+                    from_email=getattr(settings, "DEFAULT_FROM_EMAIL", settings.EMAIL_HOST_USER),
+                    recipient_list=[user.email],
+                    fail_silently=False,
+                )
             except Exception as e:
                 self.email_error = str(e)
 

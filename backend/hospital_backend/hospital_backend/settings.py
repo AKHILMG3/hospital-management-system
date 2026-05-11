@@ -207,21 +207,29 @@ EMAIL_BACKEND = os.getenv(
     "EMAIL_BACKEND",
     "django.core.mail.backends.smtp.EmailBackend",
 )
+
 EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
-EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
+
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587") or 587)
+
 EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", default=True)
 EMAIL_USE_SSL = env_bool("EMAIL_USE_SSL", default=False)
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "akhilmg147@gmail.com")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "vdnz uzrd nomb dbep").replace(" ", "")
-DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
-FRONTEND_LOGIN_URL = os.getenv("FRONTEND_LOGIN_URL", "http://127.0.0.1:5173/login")
 
-# Fallback if password not in env
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "akhilmg147@gmail.com")
+
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
 if not EMAIL_HOST_PASSWORD:
     EMAIL_HOST_PASSWORD = read_secret_file(
         os.getenv("EMAIL_HOST_PASSWORD_FILE", str(BASE_DIR / "email_app_password.txt"))
-    ).replace(" ", "")
+    ).strip()
 
-# Prevent TLS + SSL together
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
+
+FRONTEND_LOGIN_URL = os.getenv(
+    "FRONTEND_LOGIN_URL",
+    "http://127.0.0.1:5173/login"
+)
+
 if EMAIL_USE_TLS and EMAIL_USE_SSL:
-    raise ImproperlyConfigured("Set only one of EMAIL_USE_TLS or EMAIL_USE_SSL.")
+    EMAIL_USE_SSL = False
